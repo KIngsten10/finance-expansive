@@ -1,0 +1,388 @@
+/* =========================================================================
+   Finance Manager — Premium design system
+   Design tokens layered on top of Bootstrap 5.3. Light + Dark themes are
+   driven by a `data-theme` attribute on <html>; Bootstrap's own components
+   are themed via `data-bs-theme` (set in tandem by ThemeContext).
+   ========================================================================= */
+
+:root,
+[data-theme='light'] {
+  /* Surfaces & background */
+  --app-bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-secondary: #f1f5f9;
+  --surface-hover: #f1f5f9;
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+
+  /* Lines */
+  --border: #e2e8f0;
+
+  /* Brand & semantic */
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-soft: rgba(37, 99, 235, 0.1);
+  --success: #059669;
+  --success-soft: rgba(5, 150, 105, 0.1);
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.1);
+  --warning: #d97706;
+  --warning-soft: rgba(217, 119, 6, 0.12);
+  --info: #0891b2;
+  --accent: #7c3aed;
+  --accent-soft: rgba(124, 58, 237, 0.1);
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 2px 4px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.12);
+
+  /* Sidebar (always dark-ish in light mode for a premium shell) */
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-text-strong: #ffffff;
+  --sidebar-hover: #1e293b;
+  --sidebar-active: var(--primary);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --app-bg: #0b0d12;
+  --surface: #12151c;
+  --surface-secondary: #1a1f29;
+  --surface-hover: #252b38;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #a1aab8;
+
+  --border: #2b3240;
+
+  --primary: #6385ff;
+  --primary-hover: #7c96ff;
+  --primary-soft: rgba(99, 133, 255, 0.16);
+  --success: #34d399;
+  --success-soft: rgba(52, 211, 153, 0.16);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.16);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.16);
+  --info: #22d3ee;
+  --accent: #a78bfa;
+  --accent-soft: rgba(167, 139, 250, 0.16);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  --sidebar-bg: #0e1117;
+  --sidebar-text: #a1aab8;
+  --sidebar-text-strong: #f8fafc;
+  --sidebar-hover: #1a1f29;
+  --sidebar-active: var(--primary);
+
+  color-scheme: dark;
+}
+
+/* Shared tokens (theme-independent) */
+:root {
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --sidebar-width: 256px;
+  --sidebar-width-collapsed: 76px;
+  --header-height: 64px;
+  --transition: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ---- Map our tokens onto Bootstrap's CSS variables so every Bootstrap
+        component (cards, tables, forms, dropdowns, modals) is theme-aware. ---- */
+[data-theme] {
+  --bs-body-bg: var(--app-bg);
+  --bs-body-color: var(--text-primary);
+  --bs-border-color: var(--border);
+  --bs-secondary-color: var(--text-secondary);
+  --bs-emphasis-color: var(--text-primary);
+  --bs-primary: var(--primary);
+  --bs-primary-rgb: 37, 99, 235;
+  --bs-link-color: var(--primary);
+  --bs-link-hover-color: var(--primary-hover);
+}
+
+[data-theme='dark'] {
+  --bs-primary-rgb: 99, 133, 255;
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--app-bg);
+  color: var(--text-primary);
+  transition: background-color var(--transition), color var(--transition);
+}
+
+/* Tabular, aligned financial figures */
+.fin-figure {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Visible, consistent keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================================
+   Surfaces / cards
+   ========================================================================= */
+.card,
+.app-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-primary);
+  transition: box-shadow var(--transition), border-color var(--transition),
+    background-color var(--transition), transform var(--transition);
+}
+
+.card.shadow-sm {
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.app-card--interactive:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.text-muted,
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+/* Bootstrap list groups inside cards */
+.list-group-item {
+  background-color: transparent;
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* Tables */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.table> :not(caption)>*>* {
+  border-bottom-color: var(--border);
+}
+
+.table thead th {
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table-hover>tbody>tr:hover>* {
+  background-color: var(--surface-hover);
+}
+
+.table-responsive {
+  border-radius: var(--radius-sm);
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.form-label {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+/* Buttons */
+.btn {
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: background-color var(--transition), border-color var(--transition),
+    color var(--transition), box-shadow var(--transition);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--primary);
+  --bs-btn-border-color: var(--primary);
+  --bs-btn-hover-bg: var(--primary-hover);
+  --bs-btn-hover-border-color: var(--primary-hover);
+  --bs-btn-active-bg: var(--primary-hover);
+  --bs-btn-disabled-bg: var(--primary);
+  --bs-btn-disabled-border-color: var(--primary);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--text-secondary);
+  --bs-btn-border-color: var(--border);
+  --bs-btn-hover-bg: var(--surface-hover);
+  --bs-btn-hover-color: var(--text-primary);
+  --bs-btn-hover-border-color: var(--border);
+}
+
+/* Modals / dropdowns adopt surfaces */
+.modal-content,
+.dropdown-menu {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.modal-header,
+.modal-footer {
+  border-color: var(--border);
+}
+
+.dropdown-item {
+  color: var(--text-primary);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top-color: var(--border);
+}
+
+/* Soft semantic badges */
+.badge.text-bg-success {
+  background-color: var(--success-soft) !important;
+  color: var(--success) !important;
+}
+
+.badge.text-bg-danger {
+  background-color: var(--danger-soft) !important;
+  color: var(--danger) !important;
+}
+
+.badge.text-bg-secondary {
+  background-color: var(--surface-secondary) !important;
+  color: var(--text-secondary) !important;
+}
+
+.badge.text-bg-warning {
+  background-color: var(--warning-soft) !important;
+  color: var(--warning) !important;
+}
+
+.badge.text-bg-light {
+  background-color: var(--surface-secondary) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Neutralize Bootstrap's hard light/white utilities so dark mode never flashes
+   a white block. These map to theme surfaces. */
+.bg-light {
+  background-color: var(--surface-secondary) !important;
+}
+
+.bg-white {
+  background-color: var(--surface) !important;
+}
+
+/* Semantic text helpers mapped to tokens */
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.text-success {
+  color: var(--success) !important;
+}
+
+.text-danger {
+  color: var(--danger) !important;
+}
+
+.text-warning {
+  color: var(--warning) !important;
+}
+
+.text-info {
+  color: var(--info) !important;
+}
+
+/* Alerts */
+.alert-danger {
+  background-color: var(--danger-soft);
+  border-color: transparent;
+  color: var(--danger);
+}
+
+.alert-info {
+  background-color: var(--primary-soft);
+  border-color: transparent;
+  color: var(--primary);
+}
+
+.alert-warning {
+  background-color: var(--warning-soft);
+  border-color: transparent;
+  color: var(--warning);
+}
+
+.alert-secondary {
+  background-color: var(--surface-secondary);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
